@@ -1,0 +1,16 @@
+{
+  "name": "utility-spareparts",
+  "version": "1.0.0",
+  "description": "SAP CAP service layer for utilities spare-parts fulfilment",
+  "private": true,
+  "scripts": {
+    "start": "cds serve",
+    "watch": "cds watch"
+  },
+  "dependencies": {
+    "@sap/cds": "^9"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^2"
+  }
+}
