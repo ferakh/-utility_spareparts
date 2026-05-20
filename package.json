@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "build": "cds build --production",
-    "start": "cds serve",
+    "start": "cds-serve",
     "watch": "cds watch"
   },
   "dependencies": {
