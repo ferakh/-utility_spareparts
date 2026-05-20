@@ -14,6 +14,21 @@ build-parameters:
         - npx cds build --production
 
 modules:
+  - name: utility-spareparts-router
+    type: approuter.nodejs
+    path: app/router
+    parameters:
+      memory: 128M
+      disk-quota: 256M
+    requires:
+      - name: utility-spareparts-auth
+      - name: srv-api
+        group: destinations
+        properties:
+          name: srv-api
+          url: ~{srv-url}
+          forwardAuthToken: true
+
   - name: utility-spareparts-srv
     type: nodejs
     path: gen/srv

@@ -5,6 +5,7 @@ This project is prepared for SAP BTP Cloud Foundry deployment as an MTA.
 ## What Gets Deployed
 
 - CAP Node.js service module: `utility-spareparts-srv`
+- App Router module: `utility-spareparts-router`
 - SAP HANA HDI container: `utility-spareparts-db`
 - HDI deployer module: `utility-spareparts-db-deployer`
 - XSUAA instance: `utility-spareparts-auth`
@@ -42,15 +43,23 @@ Check the deployed app route:
 cf apps
 ```
 
-The CAP service root will be available at:
+The CAP service root will be available at the service route:
 
 ```text
 https://<utility-spareparts-srv-route>/odata/v4/
 ```
 
+The browser login entry point is the App Router route:
+
+```text
+https://<utility-spareparts-router-route>/odata/v4/field-maintenance/
+```
+
+Use the App Router route for human browser testing. It performs the XSUAA login flow and forwards your user token to the CAP service.
+
 ## Integration Suite Target Endpoints
 
-Use the deployed service route, not the BAS preview URL.
+Use the deployed service route, not the BAS preview URL. Integration Suite should call the direct CAP service route with OAuth client credentials.
 
 ```text
 POST https://<utility-spareparts-srv-route>/odata/v4/integration/updateRequestStatus
@@ -116,3 +125,9 @@ Token request settings:
 The XSUAA descriptor grants the technical client the `IntegrationUser` authority, so Integration Suite can call the integration endpoints.
 
 For human admin testing, create a role collection in BTP cockpit that includes the generated `Admin` role, then assign it to your user.
+
+After assigning the role collection, use the App Router URL in your browser:
+
+```text
+https://<utility-spareparts-router-route>/odata/v4/admin/
+```
