@@ -1,0 +1,8 @@
+node_modules/
+gen/
+mta_archives/
+*.mtar
+default-env.json
+.env
+.DS_Store
+npm-debug.log*

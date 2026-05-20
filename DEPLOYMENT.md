@@ -1,0 +1,118 @@
+# Utility Spare Parts Deployment
+
+This project is prepared for SAP BTP Cloud Foundry deployment as an MTA.
+
+## What Gets Deployed
+
+- CAP Node.js service module: `utility-spareparts-srv`
+- SAP HANA HDI container: `utility-spareparts-db`
+- HDI deployer module: `utility-spareparts-db-deployer`
+- XSUAA instance: `utility-spareparts-auth`
+
+## Build And Deploy From BAS
+
+Log in to Cloud Foundry from a BAS terminal:
+
+```bash
+cf login
+cf target
+```
+
+Install project dependencies:
+
+```bash
+npm install
+```
+
+Build the MTA archive:
+
+```bash
+mbt build
+```
+
+Deploy the generated archive:
+
+```bash
+cf deploy mta_archives/utility-spareparts_1.0.0.mtar
+```
+
+Check the deployed app route:
+
+```bash
+cf apps
+```
+
+The CAP service root will be available at:
+
+```text
+https://<utility-spareparts-srv-route>/odata/v4/
+```
+
+## Integration Suite Target Endpoints
+
+Use the deployed service route, not the BAS preview URL.
+
+```text
+POST https://<utility-spareparts-srv-route>/odata/v4/integration/updateRequestStatus
+POST https://<utility-spareparts-srv-route>/odata/v4/integration/receiveSupplierAcknowledgement
+```
+
+Example status update body:
+
+```json
+{
+  "request_ID": "PASTE_REQUEST_ID",
+  "status": "PURCHASE_ORDER_CREATED",
+  "message": "Purchase order created by Integration Suite",
+  "externalReference": "PO-900001"
+}
+```
+
+Example supplier acknowledgement body:
+
+```json
+{
+  "request_ID": "PASTE_REQUEST_ID",
+  "supplierName": "Apex Industrial Supply",
+  "acknowledgementStatus": "SUPPLIER_CONFIRMED",
+  "message": "Supplier confirmed fulfilment",
+  "externalAcknowledgementId": "ACK-10001"
+}
+```
+
+## Authentication Notes
+
+The deployment creates an XSUAA instance.
+
+- `FieldMaintenanceService` requires an authenticated user.
+- `AdminService` requires the `Admin` role.
+- `IntegrationService` requires the `IntegrationUser` scope.
+
+For Integration Suite, create a service key for `utility-spareparts-auth`, then use its OAuth client credentials in an Integration Suite HTTP receiver adapter.
+
+```bash
+cf create-service-key utility-spareparts-auth integration-suite-key
+cf service-key utility-spareparts-auth integration-suite-key
+```
+
+Use the service key values:
+
+- `url` as the token service base URL
+- `clientid` as the OAuth client ID
+- `clientsecret` as the OAuth client secret
+
+Request token URL:
+
+```text
+<url>/oauth/token
+```
+
+Token request settings:
+
+- Grant type: `client_credentials`
+- Client ID: service key `clientid`
+- Client Secret: service key `clientsecret`
+
+The XSUAA descriptor grants the technical client the `IntegrationUser` authority, so Integration Suite can call the integration endpoints.
+
+For human admin testing, create a role collection in BTP cockpit that includes the generated `Admin` role, then assign it to your user.

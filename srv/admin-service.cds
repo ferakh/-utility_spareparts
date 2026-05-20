@@ -1,5 +1,6 @@
 using { utility.spareparts as db } from '../db/schema';
 
+@requires: 'Admin'
 service AdminService {
   entity SpareRequests as projection on db.SpareRequests;
   entity Parts as projection on db.Parts;

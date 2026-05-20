@@ -1,0 +1,34 @@
+{
+  "xsappname": "utility-spareparts-${org}-${space}",
+  "tenant-mode": "dedicated",
+  "description": "Authorization for the utility spare-parts CAP application",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Admin",
+      "description": "Admin users can monitor and manually control spare-part requests"
+    },
+    {
+      "name": "$XSAPPNAME.IntegrationUser",
+      "description": "Integration clients can update request status and supplier acknowledgements"
+    }
+  ],
+  "authorities": [
+    "$XSAPPNAME.IntegrationUser"
+  ],
+  "role-templates": [
+    {
+      "name": "Admin",
+      "description": "Admin access for spare-parts fulfilment",
+      "scope-references": [
+        "$XSAPPNAME.Admin"
+      ]
+    },
+    {
+      "name": "IntegrationUser",
+      "description": "Technical integration access for Integration Suite",
+      "scope-references": [
+        "$XSAPPNAME.IntegrationUser"
+      ]
+    }
+  ]
+}

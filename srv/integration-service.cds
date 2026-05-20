@@ -1,5 +1,6 @@
 using { utility.spareparts as db } from '../db/schema';
 
+@requires: 'IntegrationUser'
 service IntegrationService {
   entity IntegrationLogs as projection on db.IntegrationLogs;
   entity SupplierResponses as projection on db.SupplierResponses;
