@@ -1,5 +1,5 @@
 {
-  "xsappname": "utility-spareparts-${org}-${space}",
+  "xsappname": "utility-spareparts",
   "tenant-mode": "dedicated",
   "description": "Authorization for the utility spare-parts CAP application",
   "scopes": [
