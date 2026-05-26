@@ -1,6 +1,7 @@
 node_modules/
 package-lock.json
 gen/
+resources/
 app/field-maintenance-ui/dist/
 app/field-maintenance-ui/node_modules/
 app/field-maintenance-ui/package-lock.json
