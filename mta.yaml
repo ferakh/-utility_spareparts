@@ -12,6 +12,11 @@ build-parameters:
       commands:
         - npm install
         - npx cds build --production
+        - npm --prefix app/field-maintenance-ui install
+        - npm --prefix app/field-maintenance-ui run build
+        - rm -rf app/router/resources/field-maintenance-ui
+        - mkdir -p app/router/resources/field-maintenance-ui
+        - cp -R app/field-maintenance-ui/dist/. app/router/resources/field-maintenance-ui/
 
 modules:
   - name: utility-spareparts-router

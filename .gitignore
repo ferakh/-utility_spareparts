@@ -1,5 +1,11 @@
 node_modules/
+package-lock.json
 gen/
+app/field-maintenance-ui/dist/
+app/field-maintenance-ui/node_modules/
+app/field-maintenance-ui/package-lock.json
+app/router/package-lock.json
+app/router/resources/
 mta_archives/
 *.mtar
 default-env.json

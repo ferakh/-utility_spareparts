@@ -1,7 +1,13 @@
 {
-  "welcomeFile": "/odata/v4/field-maintenance/",
+  "welcomeFile": "/field-maintenance-ui/index.html",
   "authenticationMethod": "route",
   "routes": [
+    {
+      "source": "^/field-maintenance-ui/(.*)$",
+      "target": "$1",
+      "localDir": "resources/field-maintenance-ui",
+      "authenticationType": "xsuaa"
+    },
     {
       "source": "^/odata/v4/(.*)$",
       "target": "/odata/v4/$1",
