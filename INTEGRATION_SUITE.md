@@ -116,6 +116,7 @@ photo size must be 5 MB or smaller
 ```
 
 Successful uploads create a `RequestPhotos` record and write a `PHOTO_ATTACHED` entry to `IntegrationLogs`.
+New uploads also fill `contentUrl`, which the Fiori Photos table displays as an `Open Image` link.
 
 After upload, the binary image can be downloaded with:
 

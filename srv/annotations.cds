@@ -124,6 +124,12 @@ annotate field.RequestPhotos with @(
   },
   UI.LineItem: [
     { Value: fileName, Label: 'File Name' },
+    {
+      $Type: 'UI.DataFieldWithUrl',
+      Label: 'Download',
+      Value: 'Open Image',
+      Url: contentUrl
+    },
     { Value: mimeType, Label: 'MIME Type' },
     { Value: description, Label: 'Description' },
     { Value: createdAt, Label: 'Uploaded At' }
@@ -186,6 +192,12 @@ annotate admin.RequestPhotos with @(
   UI.LineItem: [
     { Value: createdAt, Label: 'Uploaded At' },
     { Value: fileName, Label: 'File Name' },
+    {
+      $Type: 'UI.DataFieldWithUrl',
+      Label: 'Download',
+      Value: 'Open Image',
+      Url: contentUrl
+    },
     { Value: mimeType, Label: 'MIME Type' },
     { Value: description, Label: 'Description' }
   ]

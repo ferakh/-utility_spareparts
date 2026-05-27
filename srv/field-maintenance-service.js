@@ -33,6 +33,7 @@ module.exports = cds.service.impl(function () {
     if (!spareRequest) return req.reject(404, `Spare request ${request_ID} was not found`)
 
     const ID = cds.utils.uuid()
+    const contentUrl = `/odata/v4/field-maintenance/RequestPhotos(${ID})/content`
     await INSERT.into(RequestPhotos).entries({
       ID,
       request_ID,
@@ -40,6 +41,7 @@ module.exports = cds.service.impl(function () {
       mimeType,
       content: photoBytes,
       contentBase64: normalizedContent,
+      contentUrl,
       description
     })
 

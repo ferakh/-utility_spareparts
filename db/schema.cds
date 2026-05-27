@@ -39,6 +39,7 @@ entity RequestPhotos : cuid, managed {
   @Core.MediaType: mimeType
   content       : LargeBinary;
   contentBase64 : LargeString not null;
+  contentUrl    : String(500);
   description   : String(500);
 }
 
