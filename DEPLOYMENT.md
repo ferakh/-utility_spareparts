@@ -9,6 +9,9 @@ This project is prepared for SAP BTP Cloud Foundry deployment as an MTA.
 - SAP HANA HDI container: `utility-spareparts-db`
 - HDI deployer module: `utility-spareparts-db-deployer`
 - XSUAA instance: `utility-spareparts-auth`
+- HTML5 Application Repository host: `utility-spareparts-html5-service`
+- Destination service: `utility-spareparts-destination-service`
+- Fiori HTML5 app content: `utility-spareparts-field-maintenance-ui`
 
 ## Build And Deploy From BAS
 
@@ -28,13 +31,13 @@ npm install
 Build the MTA archive:
 
 ```bash
-mbt build
+npm run build
 ```
 
 Deploy the generated archive:
 
 ```bash
-cf deploy mta_archives/utility-spareparts_1.0.0.mtar
+npm run deploy
 ```
 
 Check the deployed app route:
@@ -56,6 +59,24 @@ https://<utility-spareparts-router-route>/odata/v4/field-maintenance/
 ```
 
 Use the App Router route for human browser testing. It performs the XSUAA login flow and forwards your user token to the CAP service.
+
+## SAP Build Work Zone
+
+The MTA deploys the Fiori UI as HTML5 application content for SAP Build Work Zone.
+
+After deployment:
+
+1. Open SAP Build Work Zone, standard edition.
+2. Open Channel Manager or Content Manager.
+3. Refresh the HTML5 Apps content provider.
+4. Add the `utility.spareparts.fieldmaintenanceui` app to a catalog/group/site.
+5. Publish the site.
+
+The existing Cloud Foundry App Router URL remains available as a fallback:
+
+```text
+https://<utility-spareparts-router-route>/field-maintenance-ui/index.html
+```
 
 ## Integration Suite Target Endpoints
 

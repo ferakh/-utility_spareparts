@@ -19,6 +19,33 @@ build-parameters:
         - cp -R app/field-maintenance-ui/dist/. app/router/resources/field-maintenance-ui/
 
 modules:
+  - name: utility-spareparts-app-content
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: utility-spareparts-repo-host
+        parameters:
+          content-target: true
+      - name: utility-spareparts-destination-service
+    build-parameters:
+      build-result: resources
+      requires:
+        - name: utility-spareparts-field-maintenance-ui
+          artifacts:
+            - utilitysparepartsfieldmaintenanceui.zip
+          target-path: resources/
+
+  - name: utility-spareparts-field-maintenance-ui
+    type: html5
+    path: app/field-maintenance-ui
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms: []
+
   - name: utility-spareparts-router
     type: approuter.nodejs
     path: app/router
@@ -62,6 +89,40 @@ modules:
       - name: utility-spareparts-db
 
 resources:
+  - name: utility-spareparts-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: utility-spareparts-html5-service
+      service-plan: app-host
+
+  - name: utility-spareparts-destination-service
+    type: org.cloudfoundry.managed-service
+    requires:
+      - name: srv-api
+    parameters:
+      service: destination
+      service-name: utility-spareparts-destination-service
+      service-plan: lite
+      config:
+        HTML5Runtime_enabled: true
+        init_data:
+          instance:
+            existing_destinations_policy: update
+            destinations:
+              - Name: srv-api
+                URL: ~{srv-api/srv-url}
+                Type: HTTP
+                ProxyType: Internet
+                Authentication: NoAuthentication
+                HTML5.DynamicDestination: true
+                HTML5.ForwardAuthToken: true
+              - Name: ui5
+                URL: https://ui5.sap.com
+                Type: HTTP
+                ProxyType: Internet
+                Authentication: NoAuthentication
+
   - name: utility-spareparts-db
     type: com.sap.xs.hdi-container
     parameters:
