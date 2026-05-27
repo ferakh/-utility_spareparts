@@ -38,6 +38,7 @@ module.exports = cds.service.impl(function () {
       request_ID,
       fileName,
       mimeType,
+      content: photoBytes,
       contentBase64: normalizedContent,
       description
     })

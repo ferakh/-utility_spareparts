@@ -36,6 +36,8 @@ entity RequestPhotos : cuid, managed {
   request       : Association to SpareRequests;
   fileName      : String(255) not null;
   mimeType      : String(100) not null;
+  @Core.MediaType: mimeType
+  content       : LargeBinary;
   contentBase64 : LargeString not null;
   description   : String(500);
 }

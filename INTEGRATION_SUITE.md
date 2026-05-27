@@ -117,6 +117,20 @@ photo size must be 5 MB or smaller
 
 Successful uploads create a `RequestPhotos` record and write a `PHOTO_ATTACHED` entry to `IntegrationLogs`.
 
+After upload, the binary image can be downloaded with:
+
+```text
+GET /odata/v4/field-maintenance/RequestPhotos(<photo_ID>)/content
+```
+
+Example:
+
+```text
+GET /odata/v4/field-maintenance/RequestPhotos(11111111-1111-1111-1111-111111111111)/content
+```
+
+Photos uploaded before binary content support was added may only have `contentBase64`; re-upload those photos to make the `/content` URL return image bytes.
+
 ## ValidateAndPrepare
 
 ```groovy
