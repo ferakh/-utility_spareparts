@@ -87,6 +87,11 @@ annotate field.SpareRequests with @(
       $Type: 'UI.ReferenceFacet',
       Label: 'Integration Status',
       Target: '@UI.FieldGroup#Integration'
+    },
+    {
+      $Type: 'UI.ReferenceFacet',
+      Label: 'Photos',
+      Target: 'photos/@UI.LineItem'
     }
   ],
   UI.FieldGroup #Details: {
@@ -106,6 +111,29 @@ annotate field.SpareRequests with @(
       { Value: status, Label: 'Status' },
       { Value: externalReference, Label: 'External Reference' },
       { Value: lastError, Label: 'Last Error' }
+    ]
+  }
+);
+
+annotate field.RequestPhotos with @(
+  UI.HeaderInfo: {
+    TypeName: 'Request Photo',
+    TypeNamePlural: 'Request Photos',
+    Title: { Value: fileName },
+    Description: { Value: mimeType }
+  },
+  UI.LineItem: [
+    { Value: fileName, Label: 'File Name' },
+    { Value: mimeType, Label: 'MIME Type' },
+    { Value: description, Label: 'Description' },
+    { Value: createdAt, Label: 'Uploaded At' }
+  ],
+  UI.FieldGroup #Details: {
+    Data: [
+      { Value: fileName, Label: 'File Name' },
+      { Value: mimeType, Label: 'MIME Type' },
+      { Value: description, Label: 'Description' },
+      { Value: createdAt, Label: 'Uploaded At' }
     ]
   }
 );
@@ -145,6 +173,21 @@ annotate admin.Parts with @(
     { Value: reorderLevel, Label: 'Reorder Level' },
     { Value: supplierName, Label: 'Supplier' },
     { Value: active, Label: 'Active' }
+  ]
+);
+
+annotate admin.RequestPhotos with @(
+  UI.HeaderInfo: {
+    TypeName: 'Request Photo',
+    TypeNamePlural: 'Request Photos',
+    Title: { Value: fileName },
+    Description: { Value: mimeType }
+  },
+  UI.LineItem: [
+    { Value: createdAt, Label: 'Uploaded At' },
+    { Value: fileName, Label: 'File Name' },
+    { Value: mimeType, Label: 'MIME Type' },
+    { Value: description, Label: 'Description' }
   ]
 );
 

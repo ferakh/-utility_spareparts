@@ -29,6 +29,15 @@ entity SpareRequests : cuid, managed {
   lastError         : String(500);
   supplierResponses : Association to many SupplierResponses on supplierResponses.request = $self;
   integrationLogs   : Association to many IntegrationLogs on integrationLogs.request = $self;
+  photos            : Association to many RequestPhotos on photos.request = $self;
+}
+
+entity RequestPhotos : cuid, managed {
+  request       : Association to SpareRequests;
+  fileName      : String(255) not null;
+  mimeType      : String(100) not null;
+  contentBase64 : LargeString not null;
+  description   : String(500);
 }
 
 entity SupplierResponses : cuid, managed {

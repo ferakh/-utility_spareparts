@@ -4,6 +4,7 @@ using { utility.spareparts as db } from '../db/schema';
 service AdminService {
   entity SpareRequests as projection on db.SpareRequests;
   entity Parts as projection on db.Parts;
+  @readonly entity RequestPhotos as projection on db.RequestPhotos;
   @readonly entity IntegrationLogs as projection on db.IntegrationLogs;
   @readonly entity SupplierResponses as projection on db.SupplierResponses;
 

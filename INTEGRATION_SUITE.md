@@ -34,6 +34,12 @@ Record controlled integration events:
 POST /odata/v4/integration/recordIntegrationLog
 ```
 
+Attach a photo to a spare request:
+
+```text
+POST /odata/v4/field-maintenance/addRequestPhoto
+```
+
 ## Main Flow
 
 ```text
@@ -72,6 +78,44 @@ Groovy script exception
 SMTP failure
 Unexpected HTTP 500
 ```
+
+## Photo Upload
+
+The first supported upload path is JSON with base64 content. This works well from CPI, Postman, and simple mobile clients.
+
+```http
+POST /odata/v4/field-maintenance/addRequestPhoto
+Content-Type: application/json
+Accept: application/json
+```
+
+```json
+{
+  "request_ID": "7e371e0d-6651-4bfc-8e88-bf829266ca97",
+  "fileName": "damaged-pump.jpg",
+  "mimeType": "image/jpeg",
+  "contentBase64": "/9j/4AAQSkZJRgABAQ...",
+  "description": "Photo from field technician"
+}
+```
+
+The action accepts either raw base64 content or a data URL:
+
+```text
+data:image/jpeg;base64,/9j/4AAQSkZJRgABAQ...
+```
+
+Validation rules:
+
+```text
+request_ID is required
+fileName is required
+mimeType must start with image/
+contentBase64 is required
+photo size must be 5 MB or smaller
+```
+
+Successful uploads create a `RequestPhotos` record and write a `PHOTO_ATTACHED` entry to `IntegrationLogs`.
 
 ## ValidateAndPrepare
 
