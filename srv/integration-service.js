@@ -10,6 +10,34 @@ const SUPPLIER_STATUS_MAP = {
 }
 
 module.exports = cds.service.impl(function () {
+  this.on('recordIntegrationLog', async (req) => {
+    const {
+      request_ID,
+      integrationStep,
+      direction,
+      status,
+      message,
+      payload
+    } = req.data
+
+    if (!integrationStep) return req.reject(400, 'integrationStep is required')
+    if (!direction) return req.reject(400, 'direction is required')
+    if (!status) return req.reject(400, 'status is required')
+
+    const ID = cds.utils.uuid()
+    await INSERT.into(IntegrationLogs).entries({
+      ID,
+      request_ID,
+      integrationStep,
+      direction,
+      status,
+      message,
+      payload
+    })
+
+    return SELECT.one.from(IntegrationLogs).where({ ID })
+  })
+
   this.on('updateRequestStatus', async (req) => {
     const { request_ID, status, message, externalReference } = req.data
 

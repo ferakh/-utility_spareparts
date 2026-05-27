@@ -26,4 +26,13 @@ service IntegrationService {
     message                      : String,
     externalAcknowledgementId    : String
   ) returns SupplierResponses;
+
+  action recordIntegrationLog(
+    request_ID       : UUID,
+    integrationStep  : String,
+    direction        : String,
+    status           : String,
+    message          : String,
+    payload          : String
+  ) returns IntegrationLogs;
 }
